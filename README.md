@@ -1,18 +1,22 @@
 # Intune Bulk Endpoint Purge Utility
 
-## Description
-The **Intune Bulk Endpoint Purge Utility** is an enterprise-grade GUI tool designed to streamline the secure and scalable removal of devices from Microsoft Intune. Utilizing the Microsoft Graph API, this utility securely facilitates bulk device deletions directly from an uploaded CSV file.
+![Utility GUI Preview](gui-preview.png)
 
-Tailored for advanced endpoint management, this project features an immutable, time-stamped CSV audit log generation mechanism, ensuring clear visibility into all purged, skipped, and failed device transactions.
+## Description
+
+The Intune Bulk Endpoint Purge Utility is an enterprise-grade operational tool designed to solve endpoint record synchronization gaps between IT Asset Management (ITAM) systems and Microsoft Intune. When devices are officially retired, marked as "in-store", or set to an inactive lifecycle state within an ITAM platform, legacy records frequently linger inside Intune. This utility securely accelerates the bulk deletion of those stale device objects via the Microsoft Graph API. By cleaning up dead assets, organizations eliminate data bloat and ensure that core Intune metrics—such as Endpoint Compliance Reports, Update Status Reports, and security dashboards—reflect true, highly accurate production data.
 
 ## Features
+
 - **GUI Interface:** A sleek and intuitive Windows Forms UI to easily input your Entra credentials, upload your target file, and track real-time visual feedback via progress bars and active log consoles.
 - **Automated Logging:** Emits time-stamped, immutable audit records to a structured `\Reports` directory immediately upon task completion.
 - **CSV Import Validation:** Safely checks that target CSV files are structured correctly (e.g. `DeviceName` header in A1) before granting execution capability.
 - **Error Scrubber Engine:** Sophisticated exception handling safely flags missing targets or permission denials (like `Forbidden` or `NotFound`) inside the audit log without crashing the application pipeline.
 
 ## Prerequisites
+
 Before running the utility, ensure the executing environment meets the following baseline requirements:
+
 - **Microsoft.Graph PowerShell Module:** The system must have the Microsoft.Graph modules installed (the utility will attempt to auto-install missing dependencies upon launch).
 - **Entra App Registration (Optional for Quick Start):** You can use the default Native MS Graph CLI ID provided in the GUI for a "Quick Start" capability without needing to configure a custom Azure App Registration. If using your own:
   - Ensure the App Registration has been granted the `DeviceManagementManagedDevices.ReadWrite.All` API permission.
@@ -20,6 +24,7 @@ Before running the utility, ensure the executing environment meets the following
 - **Privileged Identity Management (PIM):** Ensure you have the proper active role/elevation (if applicable) before launching the execution phase.
 
 ## How to Use
+
 1. **Clone the Repository:** Download the project files and keep the files together in an accessible directory.
 2. **Prepare Target Manifest:** Create a `.csv` file. Ensure that the header in cell **A1** is exactly named `DeviceName`. List all target hostnames directly underneath this column.
 3. **Run the Script:** Double-click the `Launch-Utility.cmd` bootstrapper to begin.
