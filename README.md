@@ -13,17 +13,17 @@ Tailored for advanced endpoint management, this project features an immutable, t
 
 ## Prerequisites
 Before running the utility, ensure the executing environment meets the following baseline requirements:
-- **Microsoft.Graph PowerShell Module:** The system must have the Microsoft.Graph modules installed (`Install-Module Microsoft.Graph`).
-- **Entra App Registration:** You need a registered Azure AD / Entra ID application to authenticate.
+- **Microsoft.Graph PowerShell Module:** The system must have the Microsoft.Graph modules installed (the utility will attempt to auto-install missing dependencies upon launch).
+- **Entra App Registration (Optional for Quick Start):** You can use the default Native MS Graph CLI ID provided in the GUI for a "Quick Start" capability without needing to configure a custom Azure App Registration. If using your own:
   - Ensure the App Registration has been granted the `DeviceManagementManagedDevices.ReadWrite.All` API permission.
   - Make sure admin consent has been granted for this permission.
 - **Privileged Identity Management (PIM):** Ensure you have the proper active role/elevation (if applicable) before launching the execution phase.
 
 ## How to Use
-1. **Clone the Repository:** Download the project files and keep the `.ps1` script within an accessible directory.
+1. **Clone the Repository:** Download the project files and keep the files together in an accessible directory.
 2. **Prepare Target Manifest:** Create a `.csv` file. Ensure that the header in cell **A1** is exactly named `DeviceName`. List all target hostnames directly underneath this column.
-3. **Run the Script:** Open PowerShell as Administrator and execute the `Intune-Bulk-Endpoint-Purge-Utility.ps1` script.
-4. **Input Authentication IDs:** Fill in the **Entra Tenant ID** and the **App Registration Client ID** within the provided text boxes in the GUI.
+3. **Run the Script:** Right-click the `Launch-Utility.cmd` bootstrapper and select **'Run as Administrator'**.
+4. **Input Authentication IDs:** Fill in the **Entra Tenant ID**. The **App Registration Client ID** is pre-filled with the default Native MS Graph CLI ID for a Quick Start, but can be replaced if using a custom registration.
 5. **Import CSV:** Click the **Browse...** button to select your target manifest CSV file.
 6. **Execute:** Click **EXECUTE BULK REMOVAL** to initiate the sequence. You will be prompted with a final authorization challenge before deletion begins.
 7. **Review Log:** Once completed, a prompt will detail your processing metrics. Navigate to the automatically generated `\Reports` subfolder to review the detailed outcome CSV.

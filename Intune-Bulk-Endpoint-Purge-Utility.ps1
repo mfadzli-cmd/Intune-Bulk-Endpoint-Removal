@@ -8,6 +8,15 @@
 #   - Automatically outputs detailed time-stamped CSV logs to a \Reports folder
 # ==============================================================================
 
+# --- [Dependencies Check] ---
+$requiredModules = @("Microsoft.Graph.Authentication", "Microsoft.Graph.DeviceManagement")
+foreach ($module in $requiredModules) {
+    if (-not (Get-Module -ListAvailable -Name $module)) {
+        Write-Host "Installing missing module: $module"
+        Install-Module -Name $module -Force -AllowClobber -Scope CurrentUser
+    }
+}
+
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 
@@ -37,7 +46,7 @@ function Update-ListBox {
 # --- [GUI Construction] ---
 $form = New-Object System.Windows.Forms.Form
 $form.Text = "Intune Bulk Endpoint Purge Utility"
-$form.Size = New-Object System.Drawing.Size(600, 680)
+$form.Size = New-Object System.Drawing.Size(600, 700)
 $form.StartPosition = "CenterScreen"
 $form.FormBorderStyle = "FixedDialog"
 $form.MaximizeBox = $false
@@ -94,40 +103,48 @@ $form.Controls.Add($lblClientId)
 $txtClientId = New-Object System.Windows.Forms.TextBox
 $txtClientId.Location = New-Object System.Drawing.Point(20, 205)
 $txtClientId.Size = New-Object System.Drawing.Size(540, 20)
+$txtClientId.Text = "14d82eec-204b-4c2f-b7e8-296a70dab67e"
 $form.Controls.Add($txtClientId)
+
+$lblClientIdDesc = New-Object System.Windows.Forms.Label
+$lblClientIdDesc.Text = "(Default: Native MS Graph CLI. Replace if using a custom App Registration)"
+$lblClientIdDesc.Location = New-Object System.Drawing.Point(20, 230)
+$lblClientIdDesc.AutoSize = $true
+$lblClientIdDesc.Font = New-Object System.Drawing.Font("Segoe UI", 8, [System.Drawing.FontStyle]::Italic)
+$form.Controls.Add($lblClientIdDesc)
 
 # File Import Path Bar
 $lblFile = New-Object System.Windows.Forms.Label
 $lblFile.Text = "Target CSV File:"
-$lblFile.Location = New-Object System.Drawing.Point(20, 235)
+$lblFile.Location = New-Object System.Drawing.Point(20, 255)
 $lblFile.AutoSize = $true
 $form.Controls.Add($lblFile)
 
 $txtFilePath = New-Object System.Windows.Forms.TextBox
-$txtFilePath.Location = New-Object System.Drawing.Point(20, 255)
+$txtFilePath.Location = New-Object System.Drawing.Point(20, 275)
 $txtFilePath.Size = New-Object System.Drawing.Size(430, 20)
 $txtFilePath.ReadOnly = $true
 $form.Controls.Add($txtFilePath)
 
 $btnBrowse = New-Object System.Windows.Forms.Button
-$btnBrowse.Location = New-Object System.Drawing.Point(460, 253)
+$btnBrowse.Location = New-Object System.Drawing.Point(460, 273)
 $btnBrowse.Text = "Browse..."
 $form.Controls.Add($btnBrowse)
 
 # Execution Visual Feedback
 $progressBar = New-Object System.Windows.Forms.ProgressBar
-$progressBar.Location = New-Object System.Drawing.Point(20, 285)
+$progressBar.Location = New-Object System.Drawing.Point(20, 305)
 $progressBar.Size = New-Object System.Drawing.Size(540, 20)
 $form.Controls.Add($progressBar)
 
 $listBoxLog = New-Object System.Windows.Forms.ListBox
-$listBoxLog.Location = New-Object System.Drawing.Point(20, 315)
+$listBoxLog.Location = New-Object System.Drawing.Point(20, 335)
 $listBoxLog.Size = New-Object System.Drawing.Size(540, 180)
 $form.Controls.Add($listBoxLog)
 
 # Execution Control Trigger
 $btnStart = New-Object System.Windows.Forms.Button
-$btnStart.Location = New-Object System.Drawing.Point(20, 515)
+$btnStart.Location = New-Object System.Drawing.Point(20, 535)
 $btnStart.Size = New-Object System.Drawing.Size(540, 50)
 $btnStart.Text = "EXECUTE BULK REMOVAL"
 $btnStart.BackColor = [System.Drawing.Color]::LightGreen
