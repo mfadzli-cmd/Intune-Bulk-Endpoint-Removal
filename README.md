@@ -22,7 +22,7 @@ Before running the utility, ensure the executing environment meets the following
 ## How to Use
 1. **Clone the Repository:** Download the project files and keep the files together in an accessible directory.
 2. **Prepare Target Manifest:** Create a `.csv` file. Ensure that the header in cell **A1** is exactly named `DeviceName`. List all target hostnames directly underneath this column.
-3. **Run the Script:** Right-click the `Launch-Utility.cmd` bootstrapper and select **'Run as Administrator'**.
+3. **Run the Script:** Double-click the `Launch-Utility.cmd` bootstrapper to begin.
 4. **Input Authentication IDs:** Fill in the **Entra Tenant ID**. The **App Registration Client ID** is pre-filled with the default Native MS Graph CLI ID for a Quick Start, but can be replaced if using a custom registration.
 5. **Import CSV:** Click the **Browse...** button to select your target manifest CSV file.
 6. **Execute:** Click **EXECUTE BULK REMOVAL** to initiate the sequence. You will be prompted with a final authorization challenge before deletion begins.
